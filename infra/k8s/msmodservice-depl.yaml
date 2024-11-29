@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: modservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: modservice
+  template:
+    metadata:
+      labels:
+        app: modservice
+    spec: 
+      containers:
+        - name: modservice
+          image: kshitij591/ms-modservice:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: modservice-srv
+spec: 
+  selector: 
+    app: modservice
+  ports:
+    - name: modservice
+      protocol: TCP
+      port: 4004
+      targetPort: 4004
